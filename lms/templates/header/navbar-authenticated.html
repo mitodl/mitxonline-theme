@@ -19,7 +19,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 
   support_link = configuration_helpers.get_value('SUPPORT_SITE_LINK', settings.SUPPORT_SITE_LINK)
   doc_link = get_online_help_info(online_help_token)['doc_url']
-  catalog_link = urljoin(settings.XPRO_BASE_URL, "catalog")
+  catalog_link = urljoin(settings.MARKETING_SITE_BASE_URL, "catalog")
 
   if online_help_token == "instructor":
     help_link = doc_link
