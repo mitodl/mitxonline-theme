@@ -12,14 +12,18 @@
 %>
 <%
   platform_name = configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME)
-  footer = get_footer(is_secure=True)
+  footer = get_footer(is_secure=request.is_secure())
   footer['copyright'] = _(u"\u00A9 {org_name}.  All rights reserved except where noted.").format(org_name=platform_name)
+  marketing_urls = configuration_helpers.get_value(
+        'MKTG_URLS',
+        settings.MKTG_URLS
+    )
   for idx, link_data in enumerate(footer["navigation_links"]):
     if link_data["name"] == "help-center":
       link_data["title"] = _("Support Center")
       footer["navigation_links"][idx] = link_data
     elif link_data["name"] == "contact":
-      contact_url = settings.MKTG_URLS.get("CONTACT", None)
+      contact_url = marketing_urls.get("CONTACT", None)
       if contact_url:
         link_data["url"] = contact_url
         footer["navigation_links"][idx] = link_data
