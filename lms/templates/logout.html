@@ -51,7 +51,7 @@
         context. As, we cannot access the MARKETING_SITE_BASE_URL from settings so, to mimic the behaviour
         of redirect to the marketing site we are using tpa_logout_url replacing the /logout/ part in case target is /.
     {% endcomment %}
-    <div id="iframeContainer" style="visibility: hidden" data-redirect-url="{% if target == '/' %}{{tpa_logout_url|slice:':-8'}}{% else %}{{ target }}{% endif %}">
+    <div id="iframeContainer" style="visibility: hidden" data-redirect-url="{% if tpa_logout_url and target == '/' %}{{tpa_logout_url|slice:':-8'}}{% else %}{{ target }}{% endif %}">
         {% for uri in logout_uris %}
             <iframe src="{{ uri }}"></iframe>
         {% endfor %}
