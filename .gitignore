@@ -130,3 +130,7 @@ dmypy.json
 
 # Mac OS X
 .DS_Store
+
+# ignore generated assets
+lms/static/css
+cms/static/css
