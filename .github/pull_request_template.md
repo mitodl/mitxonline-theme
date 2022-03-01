@@ -3,15 +3,12 @@
 - [ ] Screenshots and design review for any changes that affect layout or styling
   - [ ] Desktop screenshots
   - [ ] Mobile width screenshots
-- [ ] Migrations
-  - [ ] Migration is backwards-compatible with current production code
 - [ ] Testing
   - [ ] Code is tested
   - [ ] Changes have been manually tested
 - [ ] Settings
-  - [ ] New settings are documented and present in `app.json`
   - [ ] New settings have reasonable development defaults, if applicable
-  - [ ] Opened issue for DevOps regarding necessary configuration changes to deployed environments
+  - [ ] Opened issue in the [ol-infrastructure repo](https://github.com/mitodl/ol-infrastructure/issues/new) for any necessary configuration changes to deployed environments
 
 #### What are the relevant tickets?
 (Required)
