@@ -1,5 +1,5 @@
 # mitxonline-theme
-an open edX theme for MITx Online
+An open edX theme for MITx Online
 
 ## Table of contents:
 1. Configure Open edX
@@ -8,7 +8,7 @@ an open edX theme for MITx Online
 
 ### 1. Configure Open edX
 
-Please follow [Configure Open edX](https://github.com/mitodl/mitxonline/blob/main/docs/configure_open_edx.md).
+Please follow [Configure Open edX](https://github.com/mitodl/mitxonline/blob/main/docs/source/configuration/open_edx.rst).
 
 ## 2. Configuring MITx Online theme
 
@@ -21,7 +21,7 @@ Make sure you have MITx Online base url set in your settings. You can either add
 To apply themes in Open edX you have to add the absolute path of the themes directory to the `COMPREHENSIVE_THEME_DIRS` in `lms.yml` and `studio.yml` respectively.
 That path should be accessible to docker container. Easiest way is to put your theme in `edx-platform/themes`.
 
-If you have your theme along with other themes at `edx-platform/themes/mitonline-theme`, you can use `/edx/app/edxapp/edx-platform/themes` as directory path while you follow the steps below.
+If you have your theme along with other themes at `edx-platform/themes/mitxonline-theme`, you can use `/edx/app/edxapp/edx-platform/themes` as directory path while you follow the steps below.
 
 #### Open Shell
 First of all you open lms/studio shell e.g. `make lms-shell` or `make studio-shell`
@@ -62,14 +62,14 @@ Use the following file structure:
 
 ```
 edx-platform
-    └──mitonline-theme
+    └──mitxonline-theme
                 ├── cms
                 └── lms
                     └── static
                     └── templates
 ```
 
-### Apply mitonline-theme
+### Apply mitxonline-theme
 
 To apply a theme to an Open edX site, follow these steps.
 
@@ -77,12 +77,12 @@ To apply a theme to an Open edX site, follow these steps.
 2. Select Site themes.
 3. Select Add site theme.
 4. From the Site menu, select the site you want to apply a theme to. You can select default site.
-5. In the Theme dir name field, enter the `mitonline-theme` of the theme.
+5. In the Theme dir name field, enter the `mitxonline-theme` of the theme.
 6. Select Save.
 
 ### Compiling a Theme
 
 ```
 $ make lms-shell
-$ paver update_assets --themes mitonline-theme
+$ paver update_assets --themes mitxonline-theme
 ```
