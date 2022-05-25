@@ -134,3 +134,6 @@ dmypy.json
 # ignore generated assets
 lms/static/css
 cms/static/css
+
+# Ignore IDE configuration
+.idea/
