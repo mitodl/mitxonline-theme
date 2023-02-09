@@ -38,6 +38,13 @@
         link["url"] = urljoin(settings.MARKETING_SITE_BASE_URL, "honor-code")
         footer["legal_links"][item_num] = link
 
+  accessibility_link = {
+    "url": settings.MIT_ACCESSIBILITY_URL,
+    "title": "Accessibility",
+    "name": "accessibility"
+  }
+  footer["legal_links"].append(accessibility_link)
+
 %>
 <%namespace name='static' file='static_content.html'/>
 
