@@ -121,11 +121,7 @@
           <ul>
             % for item_num, link in enumerate(footer['legal_links'], start=1):
               <li class="nav-legal-0${item_num}">
-                % if link['name'] == 'accessibility_policy':
-                  <a href="${link['url']}">Accessibility</a>
-                % else:
                   <a href="${link['url']}">${link['title']}</a>
-                % endif
               </li>
             % endfor
           </ul>
