@@ -37,6 +37,10 @@
     elif link['name'] == "honor_code":
         link["url"] = urljoin(settings.MARKETING_SITE_BASE_URL, "honor-code")
         footer["legal_links"][item_num] = link
+    elif link['name'] == "accessibility_policy":
+        link["url"] = "https://accessibility.mit.edu/"
+        link["title"] = "Accessibility"
+        footer["legal_links"][item_num] = link
 
 %>
 <%namespace name='static' file='static_content.html'/>
@@ -117,7 +121,11 @@
           <ul>
             % for item_num, link in enumerate(footer['legal_links'], start=1):
               <li class="nav-legal-0${item_num}">
-                <a href="${link['url']}">${link['title']}</a>
+                % if link['name'] == 'accessibility_policy':
+                  <a href="${link['url']}">Accessibility</a>
+                % else:
+                  <a href="${link['url']}">${link['title']}</a>
+                % endif
               </li>
             % endfor
           </ul>
