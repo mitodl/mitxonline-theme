@@ -5,9 +5,16 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import pgettext
 from openedx.core.djangolib.markup import HTML, Text
 %>
-% if section_data['access']['admin']:
 <fieldset class="batch-enrollment membership-section">
     <legend id="heading-batch-enrollment" class="hd hd-3">${_("Batch Enrollment")}</legend>
+    % if not section_data['access']['admin']:
+    <label>
+      ${_("Batch Enrollment is disabled. Please ask users to enroll via ")}
+      <a href="https://mitxonline.mit.edu">mitxonline.mit.edu</a>
+      ${_(" or contact ")}
+      <a href="mailto:mitx-et@mit.edu">mitx-et@mit.edu</a>
+    </label>
+    %else:
     <label>
         ${_("Enter email addresses and/or usernames separated by new lines or commas.")}
         ${_("You will not get notification for emails that bounce, so please double-check spelling.")}
@@ -56,8 +63,8 @@ from openedx.core.djangolib.markup import HTML, Text
     </div>
     <div class="request-response"></div>
     <div class="request-response-error"></div>
+    %endif
 </fieldset>
-%endif
 
 %if static.get_value('ALLOW_AUTOMATED_SIGNUPS', settings.FEATURES.get('ALLOW_AUTOMATED_SIGNUPS', False)):
 <hr class="divider" />
