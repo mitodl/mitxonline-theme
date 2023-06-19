@@ -22,7 +22,7 @@
                 {% endblocktrans %}
                 {% endfilter %}
             </p>
-
+            <br />
             <p style="color: rgba(0,0,0,.75);">
                 {% autoescape off %}
                 {# xss-lint: disable=django-blocktrans-missing-escape-filter #}
@@ -31,7 +31,7 @@
                 {% endblocktrans %}
                 {% endautoescape %}
             </p>
-
+            <br />
             <p style="color: rgba(0,0,0,.75);">
                 {% autoescape off %}
                 {# xss-lint: disable=django-blocktrans-missing-escape-filter #}
@@ -40,7 +40,7 @@
                 {% endblocktrans %}
                 {% endautoescape %}
             </p>
-
+            <br />
             <p style="color: rgba(0,0,0,.75);">
                 {% filter force_escape %}
                 {% blocktrans %}
