@@ -62,8 +62,8 @@
                     <tr>
                         <td width="70">
                             <a href="{% with_link_tracking site_configuration_values.HOMEPAGE_URL %}"><img
-                                    src="https://mitxonline.mit.edu/static/images/mitx-online-logo.png" width="auto"
-                                    height="40" alt="{% filter force_escape %}{% blocktrans %}Go to {{ platform_name }} Home Page{% endblocktrans %}{% endfilter %}"/></a>
+                                    src="{{ logo_url }}" width="125"
+                                    height="35" alt="{% filter force_escape %}{% blocktrans %}Go to {{ platform_name }} Home Page{% endblocktrans %}{% endfilter %}"/></a>
                         </td>
                         <td align="right" style="text-align: {{ LANGUAGE_BIDI|yesno:"left,right" }};">
                             <a class="login" href="{% with_link_tracking site_configuration_values.SIGNIN_URL %}" style="color: #005686;">{%  trans "Sign In" %}</a>
