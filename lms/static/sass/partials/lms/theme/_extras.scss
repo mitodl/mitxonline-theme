@@ -27,8 +27,8 @@
   }
 
   .mitxonline-ol-logo {
-    height: 33px;
-    width: 129px;
+    height: 33px !important;
+    width: 129px !important;
     filter: brightness(0) saturate(100%) invert(0%) sepia(5%) saturate(7500%) hue-rotate(261deg) brightness(98%) contrast(106%);
   }
 }
