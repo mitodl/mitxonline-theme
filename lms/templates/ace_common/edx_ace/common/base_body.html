@@ -62,7 +62,7 @@
                     <tr>
                         <td width="70">
                             <a href="{% with_link_tracking site_configuration_values.HOMEPAGE_URL %}"><img
-                                    src="https://courses-qa.mitxonline.mit.edu/static/mitxonline/images/logo.png" width="124.3"
+                                    src="{% with_link_tracking site_configuration_values.LOGO_URL %}" width="124.3"
                                     height="33" alt="{% filter force_escape %}{% blocktrans %}Go to {{ platform_name }} Home Page{% endblocktrans %}{% endfilter %}"/></a>
                         </td>
                         <td align="right" style="text-align: {{ LANGUAGE_BIDI|yesno:"left,right" }};">
