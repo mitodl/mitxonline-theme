@@ -62,7 +62,6 @@ else:
         footer["legal_links"][item_num] = link
     elif link['name'] == "honor_code":
         link["url"] = urljoin(settings.MIT_LEARN_BASE_URL, "honor")
-        link["url"] = "https://learn.mit.edu/honor"
         footer["legal_links"][item_num] = link
     elif link['name'] == "accessibility_policy":
         link["title"] = "Accessibility"
