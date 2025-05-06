@@ -1,6 +1,7 @@
 ## mako
 <%page expression_filter="h"/>
 <%!
+  from datetime import datetime
   from urllib.parse import urljoin
   from django.conf import settings
   from django.urls import reverse
@@ -11,6 +12,7 @@
   from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 %>
 <%
+if settings.MITXT_COURSE_KEY_FORMAT in request.path.lower():
   platform_name = configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME)
   footer = get_footer(is_secure=request.is_secure())
   footer['copyright'] = _(u"\u00A9 {org_name}.  All rights reserved except where noted.").format(org_name=platform_name)
@@ -36,7 +38,35 @@
     elif link['name'] == "accessibility_policy":
         link["title"] = "Accessibility"
         footer["legal_links"][item_num] = link
-
+else:
+  platform_name = "MIT Learn"
+  footer = get_footer(is_secure=request.is_secure())
+  footer['copyright'] = "© {year} Massachusetts Institute of Technology".format(year=datetime.now().year)
+  for idx, link_data in enumerate(footer["navigation_links"]):
+    if link_data["name"] == "help-center":
+      link_data["title"] = _("Support Center")
+      link_data["url"] = "mailto:{support_email}".format(support_email=settings.MIT_LEARN_SUPPORT_EMAIL)
+      footer["navigation_links"][idx] = link_data
+    elif link_data["name"] == "contact":
+      link_data["url"] = "mailto:{support_email}".format(support_email=settings.MIT_LEARN_SUPPORT_EMAIL)
+      footer["navigation_links"][idx] = link_data
+    if link_data["name"] == "about":
+      link_data["url"] = urljoin(settings.MIT_LEARN_BASE_URL, "about")
+      footer["navigation_links"][idx] = link_data
+  for item_num, link in enumerate(footer['legal_links']):
+    if link['name'] == "privacy_policy":
+        link["url"] = urljoin(settings.MIT_LEARN_BASE_URL, "privacy")
+        footer["legal_links"][item_num] = link
+    elif link['name'] == "terms_of_service":
+        link["url"] = urljoin(settings.MIT_LEARN_BASE_URL, "terms-of-service")
+        footer["legal_links"][item_num] = link
+    elif link['name'] == "honor_code":
+        link["url"] = urljoin(settings.MIT_LEARN_BASE_URL, "honor")
+        link["url"] = "https://learn.mit.edu/honor"
+        footer["legal_links"][item_num] = link
+    elif link['name'] == "accessibility_policy":
+        link["title"] = "Accessibility"
+        footer["legal_links"][item_num] = link
 %>
 <%namespace name='static' file='static_content.html'/>
 
@@ -103,9 +133,15 @@
 
         <div class="wrapper-logo">
             <div class="navbar-brand">
+              % if settings.MITXT_COURSE_KEY_FORMAT in request.path.lower():
                 <a href="${settings.MARKETING_SITE_BASE_URL}">
                   <img class="logo mitxonline-ol-logo" src="${footer['logo_image']}" alt="${_("{platform_name} Home Page").format(platform_name=static.get_platform_name())}"/>
                 </a>
+              % else:
+                <a href="${settings.MIT_LEARN_BASE_URL}">
+                  <img class="logo mit-learn-logo" src="${settings.MIT_LEARN_LOGO}" alt="MIT Learn"/>
+                </a>
+              % endif
             </div>
         </div>
 

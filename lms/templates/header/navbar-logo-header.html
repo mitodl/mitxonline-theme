@@ -4,6 +4,7 @@
 
 <%namespace name='static' file='../static_content.html'/>
 <%!
+from django.conf import settings
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from lms.djangoapps.ccx.overrides import get_current_ccx
@@ -15,9 +16,15 @@ from lms.djangoapps.branding import api as branding_api
 
 <h1 class="header-logo">
     <div class="navbar-brand header">
-      <a href="${settings.MARKETING_SITE_BASE_URL}">
-        <img  class="logo mitxonline-logo" src="${branding_api.get_logo_url(is_secure)}" alt="${_("{platform_name} Home Page").format(platform_name=static.get_platform_name())}"/>
-      </a>
+      % if settings.MITXT_COURSE_KEY_FORMAT in request.path.lower():
+        <a href="${settings.MARKETING_SITE_BASE_URL}">
+          <img  class="logo mitxonline-logo" src="${branding_api.get_logo_url(is_secure)}" alt="${_("{platform_name} Home Page").format(platform_name=static.get_platform_name())}"/>
+        </a>
+      % else:
+        <a href="${settings.MIT_LEARN_BASE_URL}">
+          <img  class="logo mit-learn-logo" src="${settings.MIT_LEARN_LOGO}" alt="MIT Learn Home Page"/>
+        </a>
+      % endif
     </div>
   % if course:
     <div class="course-header">
