@@ -22,6 +22,9 @@ full_name = UserProfile.objects.get(user=self.real_user).name
 dashboard_url = urljoin(settings.MARKETING_SITE_BASE_URL, "dashboard")
 profile_url = urljoin(settings.MARKETING_SITE_BASE_URL, "profile")
 account_url = urljoin(settings.MARKETING_SITE_BASE_URL, "account-settings")
+uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
+request_path = request.get_full_path().lower()
+is_uai_course = any(course_key in request_path for course_key in uai_course_key_formats)
 %>
 
 <div class="nav-item hidden-mobile">
@@ -38,9 +41,14 @@ account_url = urljoin(settings.MARKETING_SITE_BASE_URL, "account-settings")
         % if resume_block:
             <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${resume_block}" role="menuitem">${_("Resume your last course")}</a></div>
         % endif
-        <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
-        <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${profile_url}" role="menuitem">${_("Profile")}</a></div>
-        <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${account_url}" role="menuitem">${_("Accounts")}</a></div>
-        <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>
+        % if is_uai_course:
+            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
+            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>
+        % else:
+            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
+            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${profile_url}" role="menuitem">${_("Profile")}</a></div>
+            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${account_url}" role="menuitem">${_("Accounts")}</a></div>
+            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>
+        % endif
     </div>
 </div>
