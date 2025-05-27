@@ -20,7 +20,7 @@ username = self.real_user.username
 resume_block = retrieve_last_sitewide_block_completed(self.real_user)
 full_name = UserProfile.objects.get(user=self.real_user).name
 dashboard_url = urljoin(settings.MARKETING_SITE_BASE_URL, "dashboard")
-learn_url = urljoin(settings.MIT_LEARN_BASE_URL, "dashboard")
+mit_learn_dashboard_url = urljoin(settings.MIT_LEARN_BASE_URL, "dashboard")
 profile_url = urljoin(settings.MARKETING_SITE_BASE_URL, "profile")
 account_url = urljoin(settings.MARKETING_SITE_BASE_URL, "account-settings")
 uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
@@ -43,7 +43,7 @@ is_uai_course = any(course_key in request_path for course_key in uai_course_key_
             <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${resume_block}" role="menuitem">${_("Resume your last course")}</a></div>
         % endif
         % if is_uai_course:
-            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${learn_url}" role="menuitem">${_("Dashboard")}</a></div>
+            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${mit_learn_dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
             <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>
         % else:
             <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
