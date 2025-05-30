@@ -26,10 +26,10 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 
   support_link = configuration_helpers.get_value('SUPPORT_SITE_LINK', settings.SUPPORT_SITE_LINK)
   doc_link = get_online_help_info(online_help_token)['doc_url']
-  uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
+  uai_course_key_format = getattr(settings, "UAI_COURSE_KEY_FORMAT", "")
   request_path = request.get_full_path().lower()
 
-  if any(course_key in request_path for course_key in uai_course_key_formats):
+  if uai_course_key_format and uai_course_key_format in request_path:
     catalog_link = getattr(settings, "MIT_LEARN_BASE_URL", getattr(settings, "MARKETING_SITE_BASE_URL", "#"))
   else:
     catalog_link = getattr(settings, "MARKETING_SITE_BASE_URL", "#")
