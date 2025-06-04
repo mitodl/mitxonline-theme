@@ -26,7 +26,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 
   support_link = configuration_helpers.get_value('SUPPORT_SITE_LINK', settings.SUPPORT_SITE_LINK)
   doc_link = get_online_help_info(online_help_token)['doc_url']
-  uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", "")
+  uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
   request_path = request.get_full_path().lower()
 
   if uai_course_key_formats and any(key in request_path for key in uai_course_key_formats):
