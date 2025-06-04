@@ -23,9 +23,9 @@ dashboard_url = urljoin(settings.MARKETING_SITE_BASE_URL, "dashboard")
 mit_learn_dashboard_url = urljoin(settings.MIT_LEARN_BASE_URL, "dashboard")
 profile_url = urljoin(settings.MARKETING_SITE_BASE_URL, "profile")
 account_url = urljoin(settings.MARKETING_SITE_BASE_URL, "account-settings")
-uai_course_key_format = getattr(settings, "UAI_COURSE_KEY_FORMAT", "")
+uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
 request_path = request.get_full_path().lower()
-is_uai_course = uai_course_key_format and uai_course_key_format in request_path
+is_uai_course = uai_course_key_formats and any(key in request_path for key in uai_course_key_formats)
 %>
 
 <div class="nav-item hidden-mobile">
