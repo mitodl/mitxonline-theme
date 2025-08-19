@@ -15,7 +15,7 @@
   platform_name = configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME)
   footer = get_footer(is_secure=request.is_secure())
   footer['copyright'] = _(u"\u00A9 {year} Massachusetts Institute of Technology").format(year=datetime.now().year)
-
+  footer['navigation_links'] = [link for link in footer['navigation_links'] if link.get("name")!="help-center"]
 %>
 <%namespace name='static' file='static_content.html'/>
 
