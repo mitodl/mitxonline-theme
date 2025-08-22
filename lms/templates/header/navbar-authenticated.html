@@ -34,9 +34,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
   else:
     catalog_link = getattr(settings, "MARKETING_SITE_BASE_URL", "#")
 
-  if online_help_token == "instructor":
-    help_link = doc_link
-  elif support_link:
+  if support_link:
     help_link = support_link
   else:
     help_link = doc_link
