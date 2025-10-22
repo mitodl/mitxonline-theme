@@ -13,7 +13,10 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 # App that handles subdomain specific branding
 from lms.djangoapps.branding import api as branding_api
 
+from crum import get_current_request
+
 uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
+request = get_current_request()
 request_path = request.get_full_path().lower()
 if uai_course_key_formats and any(key in request_path for key in uai_course_key_formats):
     logo_destination_url = f"{getattr(settings, 'MIT_LEARN_BASE_URL', 'https://learn.mit.edu')}/dashboard"
