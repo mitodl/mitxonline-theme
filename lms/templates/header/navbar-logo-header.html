@@ -1,6 +1,6 @@
 ## mako
 
-<%page expression_filter="h" args="online_help_token"/>
+<%page expression_filter="h" args="online_help_token,request"/>
 
 <%namespace name='static' file='../static_content.html'/>
 <%!
@@ -13,9 +13,6 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 # App that handles subdomain specific branding
 from lms.djangoapps.branding import api as branding_api
 
-from crum import get_current_request
-
-request = get_current_request()
 request_path = request.get_full_path().lower()
 uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
 if uai_course_key_formats and any(key in request_path for key in uai_course_key_formats):
