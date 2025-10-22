@@ -16,92 +16,74 @@
   footer = get_footer(is_secure=request.is_secure())
   footer['copyright'] = _(u"\u00A9 {year} Massachusetts Institute of Technology").format(year=datetime.now().year)
   footer['navigation_links'] = [link for link in footer['navigation_links'] if link.get("name")!="help-center"]
+
+  icp_license = getattr(settings,'ICP_LICENSE', False)
+  icp_markup = u" | {icp}".format(icp=icp_license) if icp_license else ""
+
+  seen_urls = set()
+  footer_links = []
+  for link in footer['navigation_links'] + footer['legal_links']:
+      url = link.get('url')
+      if not url or url in seen_urls:
+          continue
+      footer_links.append(link)
+      seen_urls.add(url)
 %>
 <%namespace name='static' file='static_content.html'/>
 
-% if uses_bootstrap:
-  <div class="container-fluid wrapper-footer">
-    <footer>
-      <div class="row">
-        <div class="col-md-9">
-          <nav class="navbar site-nav navbar-expand-sm" aria-label="${_('About')}">
-            <ul class="navbar-nav">
-              % for item_num, link in enumerate(footer['navigation_links'], start=1):
-                <li class="nav-item">
-                  <a class="nav-link" href="${link['url']}">${link['title']}</a>
-                </li>
-              % endfor
-            </ul>
-          </nav>
+<%
+  footer_css_urls = context.get('footer_css_urls', [])
+%>
 
-          ## Site operators: Please do not remove this paragraph! This attributes back to edX and makes your acknowledgement of edX's trademarks clear.
-          <p class="copyright">${footer['copyright']} ${u" | {icp}".format(icp=getattr(settings,'ICP_LICENSE')) if getattr(settings,'ICP_LICENSE',False) else ""}</p>
-
-          <nav class="navbar legal-nav navbar-expand-sm" aria-label="${_('Legal')}">
-            <ul class="navbar-nav">
-              % for item_num, link in enumerate(footer['legal_links'], start=1):
-                <li class="nav-item">
-                  <a class="nav-link" href="${link['url']}">${link['title']}</a>
-                </li>
-              % endfor
-            </ul>
-          </nav>
-        </div>
-        <div class="col-md-3">
-
-        </div>
+<%def name="render_footer()">
+  <footer class="mitx-footer"${(' dir="%s"' % bidi) if bidi else ''}>
+    <div class="mitx-footer__inner">
+      <div class="mitx-footer__column mitx-footer__column--brand">
+        <a class="mitx-footer__logo" href="${settings.MIT_BASE_URL}">
+          <img src="${footer['logo_image']}" alt="${platform_name}" />
+        </a>
       </div>
-    </footer>
-  </div>
-% else:
-  <div class="wrapper wrapper-footer">
-    <footer id="footer-openedx" class="grid-container"
-      ## When rendering the footer through the branding API,
-      ## the direction may not be set on the parent element,
-      ## so we set it here.
-      % if bidi:
-        dir=${bidi}
-      % endif
-    >
-      <div class="colophon">
-        <nav class="nav-colophon" aria-label="${_('About')}">
-          <ol>
-              % for item_num, link in enumerate(footer['navigation_links'], start=1):
-              <li class="nav-colophon-0${item_num}">
-                  % if link['name'] not in ['donate', 'blog']:
-                    <a id="${link['name']}" href="${link['url']}">${link['title']}</a>
-                  % endif
-              </li>
-              % endfor
-          </ol>
-        </nav>
-
-        % if context.get('include_language_selector', footer_language_selector_is_enabled()):
-            <%include file="${static.get_template_path('widgets/footer-language-selector.html')}"/>
-        % endif
-
-        <div class="wrapper-logo">
-            <div class="navbar-brand">
-                <a href="${settings.MIT_BASE_URL}">
-                  <img class="logo mitxonline-ol-logo" src="${footer['logo_image']}" alt="MIT Home Page"/>
-                </a>
-            </div>
-        </div>
-
-        ## Site operators: Please do not remove this paragraph! This attributes back to edX and makes your acknowledgement of edX's trademarks clear.
-        <p class="copyright">${footer['copyright']} ${u" | {icp}".format(icp=getattr(settings,'ICP_LICENSE')) if getattr(settings,'ICP_LICENSE',False) else ""}</p>
-
-        <nav class="nav-legal" aria-label="${_('Legal')}">
-          <ul>
-            % for item_num, link in enumerate(footer['legal_links'], start=1):
-              <li class="nav-legal-0${item_num}">
+      <div class="mitx-footer__column mitx-footer__column--links">
+        <nav class="mitx-footer__nav" aria-label="${_('Footer navigation')}">
+          <ul class="mitx-footer__menu">
+            % for link in footer_links:
+              <li class="mitx-footer__menu-item">
                 <a href="${link['url']}">${link['title']}</a>
               </li>
             % endfor
           </ul>
         </nav>
+        ## Site operators: Please do not remove this paragraph! This attributes back to edX and makes your acknowledgement of edX's trademarks clear.
+        <div class="mitx-footer__legal">
+          <p class="mitx-footer__copyright">${footer['copyright']}${icp_markup}</p>
+          <p class="mitx-footer__trademark">
+            ${_(u"edX and Open edX are registered trademarks of edX LLC.")}
+          </p>
+        </div>
       </div>
-    </footer>
+      <div class="mitx-footer__column mitx-footer__column--actions">
+        % if context.get('include_language_selector', footer_language_selector_is_enabled()):
+          <div class="mitx-footer__language">
+            <%include file="${static.get_template_path('widgets/footer-language-selector.html')}"/>
+          </div>
+        % endif
+        <div class="mitx-footer__powered">
+          <a href="https://openedx.org" class="mitx-footer__powered-link">
+            <img src="https://logos.openedx.org/open-edx-logo-tag.png" alt="Open edX" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</%def>
+
+% if uses_bootstrap:
+  <div class="container-fluid wrapper-footer">
+    ${render_footer()}
+  </div>
+% else:
+  <div class="wrapper wrapper-footer">
+    ${render_footer()}
   </div>
 % endif
 % if include_dependencies:
