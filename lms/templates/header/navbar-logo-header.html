@@ -1,6 +1,6 @@
 ## mako
 
-<%page expression_filter="h" args="online_help_token,request"/>
+<%page expression_filter="h" args="online_help_token"/>
 
 <%namespace name='static' file='../static_content.html'/>
 <%!
@@ -12,7 +12,9 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 
 # App that handles subdomain specific branding
 from lms.djangoapps.branding import api as branding_api
+%>
 
+<%
 request_path = request.get_full_path().lower()
 uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
 if uai_course_key_formats and any(key in request_path for key in uai_course_key_formats):
@@ -27,8 +29,6 @@ else:
 %>
 
 <h1 class="header-logo">
-    <p>${uai_course_key_formats}</p>
-    <p>${request_path}</p>
     <div class="navbar-brand header">
       <a href="${logo_destination_url}">
         <img  class="logo mitxonline-logo" src="${branding_api.get_logo_url(is_secure)}" alt="${_("{platform_name} Home Page").format(platform_name=static.get_platform_name())}"/>
