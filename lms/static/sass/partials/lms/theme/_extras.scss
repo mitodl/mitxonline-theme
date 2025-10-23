@@ -58,7 +58,7 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
-    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
     .mitx-footer__inner {
       display: flex;
@@ -75,24 +75,32 @@
     }
 
     .mitx-footer__column--brand {
-      flex: 0 0 200px;
-      justify-content: center;
+      flex: 0 0 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-height: 33px;
 
       .mitx-footer__logo {
         display: inline-flex;
         align-items: center;
+        justify-content: flex-start;
 
         img {
-          max-height: 48px;
-          height: auto;
+          height: 33px;
           width: auto;
+          max-height: 33px;
+          display: block;
         }
       }
     }
 
     .mitx-footer__column--links {
       flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
       text-align: center;
 
       .mitx-footer__nav {
@@ -105,19 +113,20 @@
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
-          column-gap: 32px;
-          row-gap: 16px;
+          column-gap: 18px;
+          row-gap: 2px;
 
           .mitx-footer__menu-item {
             a {
-              color: #0f4f74;
-              font-size: 15px;
-              font-weight: 600;
+              color: rgba(0, 109, 170, 1);
+              font-size: 1.125rem;
+              font-weight: 400;
+              line-height: 1.4;
               text-decoration: none;
 
               &:hover,
               &:focus {
-                color: #063454;
+                color: rgba(0, 109, 170, 1);
                 text-decoration: underline;
               }
             }
@@ -130,7 +139,7 @@
         flex-direction: column;
         gap: 4px;
         color: #4a4a4a;
-        font-size: 12px;
+        font-size: 13.5px;
         align-items: center;
         text-align: center;
 
@@ -142,6 +151,8 @@
 
     .mitx-footer__column--actions {
       flex: 0 0 200px;
+      display: flex;
+      flex-direction: column;
       align-items: flex-end;
       gap: 24px;
       text-align: right;
@@ -176,61 +187,62 @@ body.view-in-course {
   }
 }
 
-@media (max-width: 1199.98px) {
-  .container-fluid.wrapper-footer,
-  .wrapper.wrapper-footer {
-    .mitx-footer {
-      padding: 28px 32px;
-
-      .mitx-footer__inner {
-        gap: 32px;
-      }
-
-      .mitx-footer__column--brand,
-      .mitx-footer__column--actions {
-        flex-basis: 180px;
-      }
-
-      .mitx-footer__column--links {
-        .mitx-footer__legal {
-          align-items: center;
-          text-align: center;
-        }
-      }
+.tabs,
+.navbar-nav {
+  display: flex !important;
+  .tab,
+  .nav-item {
+    a {
+      padding: 8px 15px !important;
+      color: rgb(69, 69, 69) !important;
+      text-decoration: none !important;
+      background-color: transparent !important;
+      font-weight: 450 !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+        "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji" !important;
+      font-size: 1.125rem !important;
+      border-bottom: none !important; // reset by default
     }
-  }
-}
 
-@media (max-width: 991.98px) {
-  .container-fluid.wrapper-footer,
-  .wrapper.wrapper-footer {
-    .mitx-footer {
-      .mitx-footer__inner {
-        flex-direction: column;
-        align-items: center;
-        gap: 32px;
-        text-align: center;
-      }
+    // Hover background for ALL (active + inactive)
+    &:hover,
+    &:focus {
+      background-color: rgb(233, 230, 228) !important;
+    }
 
-      .mitx-footer__column--brand,
-      .mitx-footer__column--actions {
-        align-items: center;
-        text-align: center;
-      }
+    // Inactive links on hover — remove border
+    &:not(.active):hover a,
+    &:not(.active):focus a,
+    a:not(.active):hover,
+    a:not(.active):focus {
+      border-bottom: none !important;
+    }
 
-      .mitx-footer__column--actions {
-        .mitx-footer__language {
-          .footer-language-selector {
-            align-items: center;
-          }
-        }
-      }
+    // Active link styles (when <a> is active)
+    a.active,
+    a:visited.active {
+      color: rgb(10, 48, 85) !important;
+      background-color: transparent !important;
+      border-bottom: 4px solid rgb(10, 48, 85) !important;
+      text-decoration: none !important;
+    }
 
-      .mitx-footer__column--links {
-        .mitx-footer__legal {
-          align-items: center;
-        }
-      }
+    // Active link styles (when .nav-item/.tab itself is active)
+    &.active a,
+    &:visited.active a {
+      color: rgb(10, 48, 85) !important;
+      background-color: transparent !important;
+      border-bottom: 4px solid rgb(10, 48, 85) !important;
+      text-decoration: none !important;
+    }
+
+    // Keep border visible on hover for active items
+    &.active:hover a,
+    &.active:focus a,
+    a.active:hover,
+    a.active:focus {
+      border-bottom: 4px solid rgb(10, 48, 85) !important;
     }
   }
 }
@@ -241,14 +253,33 @@ body.view-in-course {
     .mitx-footer {
       padding: 24px 20px;
 
+      .mitx-footer__inner {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .mitx-footer__column--brand,
+      .mitx-footer__column--actions {
+        flex: 0 0 auto;
+        width: auto;
+        align-items: flex-start;
+      }
+
       .mitx-footer__column--links {
+        flex: 1 1 0;
+
         .mitx-footer__nav {
           .mitx-footer__menu {
-            column-gap: 20px;
+            flex-direction: column;
+            align-items: center;
+            column-gap: 0;
+            row-gap: 2px;
           }
         }
 
-        .mitx-footer__legal {
+        .mitx-footer__legal p {
+          text-align: center;
           align-items: center;
         }
       }

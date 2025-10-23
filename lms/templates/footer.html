@@ -20,14 +20,25 @@
   icp_license = getattr(settings,'ICP_LICENSE', False)
   icp_markup = u" | {icp}".format(icp=icp_license) if icp_license else ""
 
-  seen_urls = set()
-  footer_links = []
+  footer_links = {
+    "about": {"url": None, "title": None},
+    "terms_of_service": {"url": None, "title": None},
+    "accessibility_policy": {"url": None, "title": None},
+    "contact": {"url": None, "title": None}
+  }
   for link in footer['navigation_links'] + footer['legal_links']:
       url = link.get('url')
-      if not url or url in seen_urls:
+      name = link.get('name')
+      if not url or name not in footer_links.keys():
           continue
-      footer_links.append(link)
-      seen_urls.add(url)
+      if name == "about":
+          link["title"] = "About Us"
+      if name == "contact":
+          link["title"] = "Contact Us"
+      if name == "accessibility_policy":
+          link["title"] = "Accessibility"
+
+      footer_links[link["name"]] = {"url": url, "title": link["title"]}
 %>
 <%namespace name='static' file='static_content.html'/>
 
@@ -46,9 +57,9 @@
       <div class="mitx-footer__column mitx-footer__column--links">
         <nav class="mitx-footer__nav" aria-label="${_('Footer navigation')}">
           <ul class="mitx-footer__menu">
-            % for link in footer_links:
+            % for key, value in footer_links.items():
               <li class="mitx-footer__menu-item">
-                <a href="${link['url']}">${link['title']}</a>
+                <a href="${value['url']}">${value['title']}</a>
               </li>
             % endfor
           </ul>
