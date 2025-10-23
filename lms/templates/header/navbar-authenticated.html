@@ -31,6 +31,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 
   if uai_course_key_formats and any(key in request_path for key in uai_course_key_formats):
     catalog_link = getattr(settings, "MIT_LEARN_BASE_URL", getattr(settings, "MARKETING_SITE_BASE_URL", "#"))
+    support_link = getattr(settings, "MIT_LEARN_SUPPORT_SITE_LINK", "mailto:mitlearn-support@mit.edu")
   else:
     catalog_link = getattr(settings, "MARKETING_SITE_BASE_URL", "#")
 
