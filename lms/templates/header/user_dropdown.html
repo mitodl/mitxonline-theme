@@ -28,28 +28,27 @@ request_path = request.get_full_path().lower()
 is_uai_course = uai_course_key_formats and any(key in request_path for key in uai_course_key_formats)
 %>
 
-<div class="nav-item hidden-mobile">
-    <a href="${reverse('dashboard')}" class="menu-title">
-        <span class="sr-only">${_("Dashboard for:")}</span>
-        <span class="username">${full_name}</span>
-    </a>
-</div>
-<div class="nav-item hidden-mobile nav-item-dropdown" tabindex="-1">
-    <div class="toggle-user-dropdown" role="button" aria-label=${_("Options Menu")} aria-expanded="false" tabindex="0" aria-controls="user-menu">
-        <span class="fa fa-caret-down" aria-hidden="true"></span>
+<div class="user-dropdown toggle-user-dropdown" role="button" aria-label=${_("Options Menu")} aria-expanded="false" tabindex="0" aria-controls="user-menu">
+    <div class="nav-item hidden-mobile">
+        <div class="menu-title">
+            <span class="sr-only">${_("Dashboard for:")}</span>
+            <span class="username">${full_name}</span>
+        </div>
     </div>
-    <div class="dropdown-user-menu hidden" aria-label=${_("More Options")} role="menu" id="user-menu" tabindex="-1">
-        % if resume_block:
-            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${resume_block}" role="menuitem">${_("Resume your last course")}</a></div>
-        % endif
-        % if is_uai_course:
-            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${mit_learn_dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
-            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>
-        % else:
-            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
-            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${profile_url}" role="menuitem">${_("Profile")}</a></div>
-            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${account_url}" role="menuitem">${_("Accounts")}</a></div>
-            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>
-        % endif
+    <div class="nav-item hidden-mobile nav-item-dropdown" tabindex="-1">
+        <div>
+            <span class="fa fa-caret-down" aria-hidden="true"></span>
+        </div>
+        <div class="dropdown-user-menu hidden" aria-label=${_("More Options")} role="menu" id="user-menu" tabindex="-1">
+            % if is_uai_course:
+                <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${mit_learn_dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
+                <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>
+            % else:
+                <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
+                <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${profile_url}" role="menuitem">${_("Profile")}</a></div>
+                <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${account_url}" role="menuitem">${_("Accounts")}</a></div>
+                <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>
+            % endif
+        </div>
     </div>
 </div>
