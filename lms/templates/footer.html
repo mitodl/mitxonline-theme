@@ -110,8 +110,8 @@
   <%include file="widgets/segment-io.html" />
   <%include file="widgets/segment-io-footer.html" />
 % endif
-% if getattr(settings, 'APPZI_URL', None):
-  <script async src="${settings.APPZI_URL}"></script>
+% if appzi_url := getattr(settings, 'APPZI_URL', None):
+  <script async src="${appzi_url}"></script>
 % endif
 % if footer_css_urls:
   % for url in footer_css_urls:
