@@ -29,7 +29,7 @@ is_uai_course = uai_course_key_formats and any(key in request_path for key in ua
 %>
 
 <div class="nav-item hidden-mobile">
-    <a href="${reverse('dashboard')}" class="menu-title">
+    <a href="${mit_learn_dashboard_url if is_uai_course else dashboard_url}" class="menu-title">
         <span class="sr-only">${_("Dashboard for:")}</span>
         <span class="username">${full_name}</span>
     </a>
@@ -39,9 +39,6 @@ is_uai_course = uai_course_key_formats and any(key in request_path for key in ua
         <span class="fa fa-caret-down" aria-hidden="true"></span>
     </div>
     <div class="dropdown-user-menu hidden" aria-label=${_("More Options")} role="menu" id="user-menu" tabindex="-1">
-        % if resume_block:
-            <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${resume_block}" role="menuitem">${_("Resume your last course")}</a></div>
-        % endif
         % if is_uai_course:
             <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${mit_learn_dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
             <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>

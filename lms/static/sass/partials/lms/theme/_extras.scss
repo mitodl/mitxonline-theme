@@ -32,3 +32,35 @@
     filter: brightness(0) saturate(100%) invert(0%) sepia(5%) saturate(7500%) hue-rotate(261deg) brightness(98%) contrast(106%);
   }
 }
+
+.secondary {
+  .mobile-nav-item {
+    .dashboard-btn {
+      height: 3rem;
+      width: 133px;
+      background-color: #40464C;
+      display: flex;
+      color: white !important;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border-radius: 0.375rem;
+      gap: 8px;
+      font-weight: 500;
+    }
+
+    .dashboard-btn:hover {
+      background-color: #2f3438;
+    }
+
+    .dashboard-btn .fa {
+      font-size: 1.5rem;
+    }
+  }
+
+  .mobile-nav-item.user-dropdown {
+    border: 1px solid rgba(10, 48, 85, 1);
+    border-radius: 0.375rem !important;
+    padding-top: 3px !important;
+  }
+}
