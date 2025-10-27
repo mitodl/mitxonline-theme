@@ -16,11 +16,7 @@ from common.djangoapps.student.models import UserProfile
 <%
 ## This template should not use the target student's details when masquerading, see TNL-4895
 self.real_user = getattr(user, 'real_user', user)
-username = self.real_user.username
-resume_block = retrieve_last_sitewide_block_completed(self.real_user)
 full_name = UserProfile.objects.get(user=self.real_user).name
-dashboard_url = urljoin(settings.MARKETING_SITE_BASE_URL, "dashboard")
-mit_learn_dashboard_url = urljoin(settings.MIT_LEARN_BASE_URL, "dashboard")
 profile_url = urljoin(settings.MARKETING_SITE_BASE_URL, "profile")
 account_url = urljoin(settings.MARKETING_SITE_BASE_URL, "account-settings")
 uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
@@ -40,10 +36,8 @@ is_uai_course = uai_course_key_formats and any(key in request_path for key in ua
         </div>
         <div class="dropdown-user-menu hidden" aria-label=${_("More Options")} role="menu" id="user-menu" tabindex="-1">
             % if is_uai_course:
-                <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${mit_learn_dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
                 <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>
             % else:
-                <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
                 <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${profile_url}" role="menuitem">${_("Profile")}</a></div>
                 <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${account_url}" role="menuitem">${_("Accounts")}</a></div>
                 <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>
