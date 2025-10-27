@@ -276,6 +276,9 @@ body.view-in-course {
   border-radius: 0.375rem;
   padding: 12px;
   .nav-item{
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
     padding: 0 !important;
   }
   &:hover,
