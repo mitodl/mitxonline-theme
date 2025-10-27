@@ -21,24 +21,17 @@
   icp_markup = u" | {icp}".format(icp=icp_license) if icp_license else ""
 
   footer_links = {
-    "about": {"url": None, "title": None},
-    "terms_of_service": {"url": None, "title": None},
-    "accessibility_policy": {"url": None, "title": None},
-    "contact": {"url": None, "title": None}
+    "about": {"url": None, "title": "About Us"},
+    "terms_of_service": {"url": None, "title": "Terms of Service"},
+    "accessibility_policy": {"url": None, "title": "Accessibility"},
+    "contact": {"url": None, "title": "Contact Us"}
   }
   for link in footer['navigation_links'] + footer['legal_links']:
       url = link.get('url')
       name = link.get('name')
       if not url or name not in footer_links.keys():
           continue
-      if name == "about":
-          link["title"] = "About Us"
-      if name == "contact":
-          link["title"] = "Contact Us"
-      if name == "accessibility_policy":
-          link["title"] = "Accessibility"
-
-      footer_links[link["name"]] = {"url": url, "title": link["title"]}
+      footer_links[link["name"]]["url"] = url
 %>
 <%namespace name='static' file='static_content.html'/>
 
@@ -47,39 +40,39 @@
 %>
 
 <%def name="render_footer()">
-  <footer class="mitx-footer"${(' dir="%s"' % bidi) if bidi else ''}>
-    <div class="mitx-footer__inner">
-      <div class="mitx-footer__column mitx-footer__column--brand">
-        <a class="mitx-footer__logo" href="${settings.MIT_BASE_URL}">
+  <footer class="mit-footer"${(' dir="%s"' % bidi) if bidi else ''}>
+    <div class="mit-footer__inner">
+      <div class="mit-footer__column mit-footer__column--brand">
+        <a class="mit-footer__logo" href="${settings.MIT_BASE_URL}">
           <img src="${footer['logo_image']}" alt="${platform_name}" />
         </a>
       </div>
-      <div class="mitx-footer__column mitx-footer__column--links">
-        <nav class="mitx-footer__nav" aria-label="${_('Footer navigation')}">
-          <ul class="mitx-footer__menu">
+      <div class="mit-footer__column mit-footer__column--links">
+        <nav class="mit-footer__nav" aria-label="${_('Footer navigation')}">
+          <ul class="mit-footer__menu">
             % for key, value in footer_links.items():
-              <li class="mitx-footer__menu-item">
+              <li class="mit-footer__menu-item">
                 <a href="${value['url']}">${value['title']}</a>
               </li>
             % endfor
           </ul>
         </nav>
         ## Site operators: Please do not remove this paragraph! This attributes back to edX and makes your acknowledgement of edX's trademarks clear.
-        <div class="mitx-footer__legal">
-          <p class="mitx-footer__copyright">${footer['copyright']}${icp_markup}</p>
-          <p class="mitx-footer__trademark">
+        <div class="mit-footer__legal">
+          <p class="mit-footer__copyright">${footer['copyright']}${icp_markup}</p>
+          <p class="mit-footer__trademark">
             ${_(u"edX and Open edX are registered trademarks of edX LLC.")}
           </p>
         </div>
       </div>
-      <div class="mitx-footer__column mitx-footer__column--actions">
+      <div class="mit-footer__column mit-footer__column--actions">
         % if context.get('include_language_selector', footer_language_selector_is_enabled()):
-          <div class="mitx-footer__language">
+          <div class="mit-footer__language">
             <%include file="${static.get_template_path('widgets/footer-language-selector.html')}"/>
           </div>
         % endif
-        <div class="mitx-footer__powered">
-          <a href="https://openedx.org" class="mitx-footer__powered-link">
+        <div class="mit-footer__powered">
+          <a href="https://openedx.org" class="mit-footer__powered-link">
             <img src="https://logos.openedx.org/open-edx-logo-tag.png" alt="Open edX" />
           </a>
         </div>
