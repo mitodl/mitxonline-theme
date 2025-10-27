@@ -26,10 +26,13 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
   doc_link = get_online_help_info(online_help_token)['doc_url']
   uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
   request_path = request.get_full_path().lower()
+  dashboard_url = urljoin(settings.MARKETING_SITE_BASE_URL, "dashboard")
+  is_uai_course = uai_course_key_formats and any(key in request_path for key in uai_course_key_formats)
 
-  if uai_course_key_formats and any(key in request_path for key in uai_course_key_formats):
+  if is_uai_course:
     catalog_link = getattr(settings, "MIT_LEARN_BASE_URL", getattr(settings, "MARKETING_SITE_BASE_URL", "#"))
     support_link = getattr(settings, "MIT_LEARN_SUPPORT_SITE_LINK", "mailto:mitlearn-support@mit.edu")
+    dashboard_url = urljoin(settings.MIT_LEARN_BASE_URL, "dashboard")
   else:
     catalog_link = getattr(settings, "MARKETING_SITE_BASE_URL", "#")
 
@@ -67,6 +70,14 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
   <div class="secondary">
     <div class="mobile-nav-item hidden-mobile nav-item">
       <a class="help-link" href="${help_link}" target="_blank">${_("Help")}</a>
+    </div>
+    <div class="mobile-nav-item hidden-mobile nav-item dashboard-btn">
+      <a
+        href="${dashboard_url}"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5Z" fill="currentColor"></path></svg>
+        ${_("Dashboard")}
+      </a>
     </div>
     <%include file="user_dropdown.html"/>
   </div>
