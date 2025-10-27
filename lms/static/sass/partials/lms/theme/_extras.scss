@@ -354,6 +354,8 @@ body.view-in-course {
 }
 
 .secondary {
+  margin: 8px 40px 0 0 !important;
+
   .mobile-nav-item.dashboard-btn {
     height: 45px;
     width: 160px;
@@ -371,9 +373,15 @@ body.view-in-course {
 
     a {
       color: white !important;
+      display: flex;
+      gap: 8px;
 
-      .fa {
-        font-size: 1.5rem;
+      svg {
+        path {
+          fill: transparent;
+          stroke: #fff;
+          stroke-width: 2;
+        }
       }
     }
 
