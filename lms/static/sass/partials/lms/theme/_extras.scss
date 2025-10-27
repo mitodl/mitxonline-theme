@@ -1,3 +1,25 @@
+// Shared design tokens to keep typography and color usage consistent across the LMS theme.
+$font-stack-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+        "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+$font-size-ui: 1.125rem;
+$color-surface-muted: #f7f7f7;
+$color-surface-default: #ffffff;
+$color-surface-border: #e0e0e0;
+$color-brand-primary: rgba(0, 109, 170, 1);
+$color-text-muted: rgb(69, 69, 69);
+$color-text-emphasis: rgb(10, 48, 85);
+$color-hover-neutral: rgb(233, 230, 228);
+$color-background-alt: rgb(240, 243, 245);
+$color-background-soft: rgb(240, 238, 237);
+$color-border-strong: rgb(7, 34, 60);
+$color-border-subtle: rgba(0, 0, 0, 0.15);
+$color-hover-link: rgb(0, 60, 94);
+
+body{
+  font-family: $font-stack-system !important;
+}
+
 .navbar-brand {
   display: block;
   position: relative;
@@ -30,5 +52,300 @@
   .mitxonline-ol-logo {
     height: 48px !important;
     filter: brightness(0) saturate(100%) invert(0%) sepia(5%) saturate(7500%) hue-rotate(261deg) brightness(98%) contrast(106%);
+  }
+}
+
+.container-fluid.wrapper-footer,
+.wrapper.wrapper-footer {
+  background: $color-surface-muted;
+  padding: 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  border: none !important;
+
+  &,
+  &.wrapper-footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .mit-footer {
+    background: $color-surface-default;
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: none;
+    padding: 32px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    font-family: $font-stack-system;
+
+    .mit-footer__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 48px;
+      width: 100%;
+    }
+
+    .mit-footer__column {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .mit-footer__column--brand {
+      flex: 0 0 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-height: 33px;
+
+      .mit-footer__logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        img {
+          height: 33px;
+          width: auto;
+          max-height: 33px;
+          display: block;
+        }
+      }
+    }
+
+    .mit-footer__column--links {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+      .mit-footer__nav {
+        width: 100%;
+
+        .mit-footer__menu {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          column-gap: 18px;
+          row-gap: 2px;
+
+          .mit-footer__menu-item {
+            a {
+              color: $color-brand-primary;
+              font-size: $font-size-ui;
+              font-weight: 400;
+              line-height: 1.4;
+              text-decoration: none;
+
+              &:hover,
+              &:focus {
+                color: $color-hover-link;
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+      }
+
+      .mit-footer__legal {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        color: #4a4a4a;
+        font-size: 13.5px;
+        align-items: center;
+        text-align: center;
+
+        p {
+          margin: 0;
+        }
+      }
+    }
+
+    .mit-footer__column--actions {
+      flex: 0 0 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 24px;
+      text-align: right;
+
+      .mit-footer__language {
+        .footer-language-selector {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 8px;
+        }
+      }
+
+      .mit-footer__powered-link {
+        display: inline-flex;
+        align-items: center;
+
+        img {
+          width: 120px;
+          height: auto;
+        }
+      }
+    }
+  }
+}
+
+body.view-in-course {
+  .wrapper-footer,
+  .wrapper.wrapper-footer,
+  .container-fluid.wrapper-footer {
+    margin-top: 0;
+  }
+}
+
+.tabs,
+.navbar-nav {
+  display: flex !important;
+  .tab,
+  .nav-item {
+    a {
+      padding: 8px 15px !important;
+      color: $color-text-muted !important;
+      text-decoration: none !important;
+      background-color: transparent !important;
+      font-weight: 450 !important;
+      font-family: $font-stack-system !important;
+      font-size: $font-size-ui !important;
+      border-bottom: none !important; // reset by default
+    }
+
+    // Hover background for ALL (active + inactive)
+    &:hover,
+    &:focus {
+      background-color: $color-hover-neutral !important;
+    }
+
+    // Inactive links on hover — remove border
+    &:not(.active):hover a,
+    &:not(.active):focus a,
+    a:not(.active):hover,
+    a:not(.active):focus {
+      border-bottom: none !important;
+    }
+
+    // Active link styles (when <a> is active)
+    a.active,
+    a:visited.active {
+      color: $color-text-emphasis !important;
+      background-color: transparent !important;
+      border-bottom: 4px solid $color-text-emphasis !important;
+      text-decoration: none !important;
+    }
+
+    // Active link styles (when .nav-item/.tab itself is active)
+    &.active a,
+    &:visited.active a {
+      color: $color-text-emphasis !important;
+      background-color: transparent !important;
+      border-bottom: 4px solid $color-text-emphasis !important;
+      text-decoration: none !important;
+    }
+
+    // Keep border visible on hover for active items
+    &.active:hover a,
+    &.active:focus a,
+    a.active:hover,
+    a.active:focus {
+      border-bottom: 4px solid $color-text-emphasis !important;
+    }
+  }
+}
+
+.secondary{
+  display: flex !important;
+}
+
+.user-dropdown{
+  border: 1px solid $color-text-emphasis;
+  border-radius: 0.375rem;
+  padding: 12px;
+  .nav-item{
+    padding: 0 !important;
+  }
+  &:hover,
+  &:focus{
+    background-color: $color-background-alt !important;
+    border-color: $color-border-strong;
+  }
+}
+
+.dropdown-user-menu{
+  min-width: 18rem !important;
+  padding: 0.5rem 0px !important;
+  border-radius: 5% !important;
+  border: 1px solid $color-border-subtle !important;
+  .dropdown-item{
+    border-bottom: none !important;
+    font-weight: 400 !important;
+    font-size: $font-size-ui !important;
+    &:hover{
+      background-color: $color-background-soft !important;
+    }
+  }
+}
+
+.course-header{
+  .course-name{
+    font-size: $font-size-ui !important;
+    font-weight: 700 !important;
+    line-height: 1.5556;
+    color: $color-text-muted !important;
+    font-family: $font-stack-system !important;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .container-fluid.wrapper-footer,
+  .wrapper.wrapper-footer {
+    .mit-footer {
+      padding: 24px 20px;
+
+      .mit-footer__inner {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .mit-footer__column--brand,
+      .mit-footer__column--actions {
+        flex: 0 0 auto;
+        width: auto;
+        align-items: flex-start;
+      }
+
+      .mit-footer__column--links {
+        flex: 1 1 0;
+
+        .mit-footer__nav {
+          .mit-footer__menu {
+            flex-direction: column;
+            align-items: center;
+            column-gap: 0;
+            row-gap: 2px;
+          }
+        }
+
+        .mit-footer__legal p {
+          text-align: center;
+          align-items: center;
+        }
+      }
+    }
   }
 }

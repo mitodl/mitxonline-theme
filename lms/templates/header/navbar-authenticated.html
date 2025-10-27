@@ -14,8 +14,6 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 %>
 
 <%
-  show_explore_courses = settings.FEATURES.get('COURSES_ARE_BROWSABLE') and not show_program_listing
-
   try:
     from edx_sysadmin.utils.utils import show_sysadmin_dashboard
     sysadmin_dashboard = show_sysadmin_dashboard(user)
@@ -58,14 +56,6 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
           </a>
         </div>
       % endif
-    % endif
-    % if show_explore_courses:
-      <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
-          <a class="tab-nav-link" href="${catalog_link}"
-             aria-current="${'page' if '/courses' in request.path else 'false'}">
-             ${_('Catalog')}
-          </a>
-      </div>
     % endif
     % if sysadmin_dashboard:
       <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
