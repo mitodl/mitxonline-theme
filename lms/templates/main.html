@@ -64,6 +64,12 @@ from common.djangoapps.pipeline_mako import render_require_js_path_overrides
       var courseNumber = "${getattr(_course_for_title, 'display_number_with_default', '') | n, js_escaped_string}";
       if (!courseDisplayName) { return; }
       var parts = document.title.split(sep);
+
+      // Remove course number prefix from first crumb, if present.
+      if (courseNumber && parts[0].startsWith(courseNumber + ' ')) {
+        parts[0] = parts[0].replace(courseNumber + ' ', '').trim();
+      }
+
       // Replace exact match of course number crumb with display name.
       for (var i = 0; i < parts.length; i++) {
         if (courseNumber && parts[i].trim() === courseNumber.trim()) {
