@@ -12,6 +12,9 @@
   from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 %>
 <%
+  uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
+  request_path = request.get_full_path().lower()
+  is_uai_course = uai_course_key_formats and any(key in request_path for key in uai_course_key_formats)
   platform_name = configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME)
   footer = get_footer(is_secure=request.is_secure())
   footer['copyright'] = _(u"\u00A9 {year} Massachusetts Institute of Technology").format(year=datetime.now().year)
@@ -26,6 +29,10 @@
     "accessibility_policy": {"url": None, "title": "Accessibility"},
     "contact": {"url": None, "title": "Contact Us"}
   }
+
+  if not is_uai_course:
+      footer_links["help"] = {"url": settings.SUPPORT_SITE_LINK, "title": "Help"}
+
   for link in footer['navigation_links'] + footer['legal_links']:
       url = link.get('url')
       name = link.get('name')
