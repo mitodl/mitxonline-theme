@@ -68,14 +68,10 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
     % endif
   </div>
   <div class="secondary">
-    <div class="mobile-nav-item hidden-mobile nav-item">
-      <a class="help-link" href="${help_link}" target="_blank">${_("Help")}</a>
-    </div>
-    <div class="mobile-nav-item hidden-mobile nav-item dashboard-btn">
+    <div style="display: flex; align-items: center;">
       <a
-        href="${dashboard_url}"
+        href="${dashboard_url}" class="dashboard-btn"
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5Z" fill="currentColor"></path></svg>
         ${_("Dashboard")}
       </a>
     </div>

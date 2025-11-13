@@ -33,8 +33,9 @@ from lms.djangoapps.branding import api as branding_api
   % if course:
     <div class="course-header">
       % if not is_uai_course:
-        <span class="provider">${course.display_org_with_default}:</span>
-        <span class="course-number">${course.display_number_with_default}</span>
+        <div style="margin-bottom: 4px;">
+          <span class="provider course-number">${course.display_org_with_default} ${course.display_number_with_default}</span>
+        </div>
       % endif
         <%
       display_name = course.display_name_with_default
@@ -43,7 +44,7 @@ from lms.djangoapps.branding import api as branding_api
         if ccx:
           display_name = ccx.display_name
       %>
-      <span class="course-name" style="${'margin-top: 9px;' if is_uai_course else 'margin-top: 0px !important;'}">
+      <span class="course-name ${'uai-course' if is_uai_course else ''}">
         ${display_name}
       </span>
     </div>
