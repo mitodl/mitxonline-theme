@@ -25,7 +25,7 @@ from common.djangoapps.student.models import CourseEnrollment
 <%
   cert_name_short = settings.CERT_NAME_SHORT
   cert_name_long = settings.CERT_NAME_LONG
-  catalog_link = settings.MARKETING_SITE_BASE_URL
+  catalog_link = getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu')
 %>
 
 
