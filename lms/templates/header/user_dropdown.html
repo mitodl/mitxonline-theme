@@ -17,14 +17,14 @@ from common.djangoapps.student.models import UserProfile
 ## This template should not use the target student's details when masquerading, see TNL-4895
 self.real_user = getattr(user, 'real_user', user)
 full_name = UserProfile.objects.get(user=self.real_user).name
-profile_url = urljoin(settings.MARKETING_SITE_BASE_URL, "profile")
-account_url = urljoin(settings.MARKETING_SITE_BASE_URL, "account-settings")
+profile_url = urljoin(getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu'), "profile")
+account_url = urljoin(getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu'), "account-settings")
 uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
 request_path = request.get_full_path().lower()
 is_uai_course = uai_course_key_formats and any(key in request_path for key in uai_course_key_formats)
-dashboard_url = urljoin(settings.MARKETING_SITE_BASE_URL, "dashboard")
+dashboard_url = urljoin(getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu'), "dashboard")
 if is_uai_course:
-    dashboard_url = urljoin(settings.MIT_LEARN_BASE_URL, "dashboard")
+    dashboard_url = urljoin(getattr(settings, 'MIT_LEARN_BASE_URL', 'https://learn.mit.edu'), "dashboard")
 %>
 
 <div class="nav-item nav-item-dropdown" tabindex="-1">

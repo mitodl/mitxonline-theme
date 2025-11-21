@@ -26,15 +26,15 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
   doc_link = get_online_help_info(online_help_token)['doc_url']
   uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
   request_path = request.get_full_path().lower()
-  dashboard_url = urljoin(settings.MARKETING_SITE_BASE_URL, "dashboard")
+  dashboard_url = urljoin(getattr(settings,'MITXONLINE_BASE_URL',"https://mitxonline.mit.edu"), "dashboard")
   is_uai_course = uai_course_key_formats and any(key in request_path for key in uai_course_key_formats)
 
   if is_uai_course:
-    catalog_link = getattr(settings, "MIT_LEARN_BASE_URL", getattr(settings, "MARKETING_SITE_BASE_URL", "#"))
+    catalog_link = getattr(settings, "MIT_LEARN_BASE_URL", getattr(settings, "MITXONLINE_BASE_URL", "#"))
     support_link = getattr(settings, "MIT_LEARN_SUPPORT_SITE_LINK", "mailto:mitlearn-support@mit.edu")
     dashboard_url = urljoin(settings.MIT_LEARN_BASE_URL, "dashboard")
   else:
-    catalog_link = getattr(settings, "MARKETING_SITE_BASE_URL", "#")
+    catalog_link = getattr(settings, "MITXONLINE_BASE_URL", "https://mitxonline.mit.edu")
 
   if support_link:
     help_link = support_link
