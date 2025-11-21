@@ -1,8 +1,10 @@
 <%page expression_filter="h"/>
 <%namespace name='static' file='../static_content.html'/>
 <%!
+from urllib.parse import urljoin
 from django.utils.translation import gettext as _
 from openedx.core.djangolib.markup import HTML, Text
+from django.conf import settings
 %>
 <%inherit file="../main.html" />
 
@@ -18,9 +20,18 @@ from openedx.core.djangolib.markup import HTML, Text
                 % if page_content:
                     ${page_content}
                 % else:
+                <%
+                    uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
+                    request_path = request.get_full_path().lower()
+                    is_uai_course = uai_course_key_formats and any(key in request_path for key in uai_course_key_formats)
+                    if is_uai_course:
+                        homepage_link = getattr(settings, 'MIT_LEARN_BASE_URL', 'https://learn.mit.edu')
+                    else:
+                        homepage_link = getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu')
+                %>
                 ${_('The page that you were looking for was not found.')}
                 ${Text(_('Go back to the {homepage} or contact us about any pages that may have been moved at {email}.')).format(
-                  homepage=HTML('<a href="{marketing_site_base_url}">homepage</a>').format(marketing_site_base_url=getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu')),
+                  homepage=HTML(f'<a href="{homepage_link}">homepage</a>'),
                   email=HTML('<a href="{address}">contact us</a>').format(
                     address=Text(marketing_link('CONTACT'))
                   )
