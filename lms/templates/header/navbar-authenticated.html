@@ -60,10 +60,10 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
         </div>
       % endif
     % endif
-    % if sysadmin_dashboard:
+    % if True:
       <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
         ## Translators: This is short for "System administration".
-        <a class="tab-nav-link" href="${reverse('sysadmin:sysadmin')}">${_("Sysadmin")}</a>
+        <a class="tab-nav-link" href="#">${_("Sysadmin")}</a>
       </div>
     % endif
   </div>

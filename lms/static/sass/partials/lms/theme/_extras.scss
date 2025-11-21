@@ -347,7 +347,12 @@ body.view-in-course {
     }
   }
 
-  .dashboard-btn{
+  .nav-links .main{
+    margin: 9px 0 0 17px !important;
+  }
+
+  .dashboard-btn, a.tab-nav-link{
+    margin-left: 10px !important;
     display: inline-flex !important;
     padding: 10px 12px !important;
     flex-direction: column !important;
