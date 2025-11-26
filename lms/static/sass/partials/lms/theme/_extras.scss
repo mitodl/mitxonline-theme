@@ -277,9 +277,14 @@ body.view-in-course {
   font-style: normal !important;
   font-size: 14px !important;
   line-height: 18px !important;
+  height: 72px !important;
 
   .show-in-mobile{
     display: none !important;
+  }
+
+  .main-header {
+    margin: 8px 0px !important;
   }
 
   .course-header{
@@ -352,25 +357,28 @@ body.view-in-course {
   }
 
   .dashboard-btn, a.tab-nav-link{
-    margin-left: 10px !important;
+    text-decoration: none !important;
+    text-align: center !important;
     display: inline-flex !important;
-    padding: 10px 12px !important;
-    flex-direction: column !important;
+    -webkit-box-pack: center !important;
     justify-content: center !important;
+    -webkit-box-align: center !important;
     align-items: center !important;
-    gap: 10px !important;
-    flex-shrink: 0 !important;
+    transition: background 250ms !important;
+    cursor: pointer !important;
+    min-width: 100px !important;
+    box-sizing: border-box !important;
+    font-family: neue-haas-grotesk-text, sans-serif !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    font-size: 0.75rem !important;
+    line-height: 1rem !important;
+    color: rgb(33, 35, 38) !important;
+    border: none !important;
+    background-color: rgb(221, 225, 230) !important;
     border-radius: 4px !important;
-    border: 1px solid var(--Light-Gray-2, #DDE1E6) !important;
-    background: var(--Light-Gray-2, #DDE1E6) !important;
-    color: #212326 !important;
-    p {
-      color: #212326 !important;
-      &:hover {
-        text-decoration: none !important;
-        color: #212326 !important;
-      }
-    }
+    height: 40px !important;
+    padding: 18px 12px !important;
   &:hover{
     background: var(--white-mit-brand, #FFF) !important;
     text-decoration: none !important;
