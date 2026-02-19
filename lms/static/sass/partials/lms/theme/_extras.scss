@@ -385,9 +385,9 @@ body.view-in-course {
    }
   }
   .header-logo a{
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-left: 30px !important;
   }
   .dropdown-user-menu {
@@ -638,4 +638,13 @@ body.view-in-course {
   .mobile-nav-item {
     font-size: 18px !important;
 }
+}
+@media (min-width: 768px) {
+  .wrap-instructor-info {
+    display: flex !important;
+    gap: 10px;
+  }
+}
+.wrap-instructor-info .instructor-info-action {
+  margin-left: 0px !important;
 }
