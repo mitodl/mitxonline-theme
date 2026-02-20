@@ -3,17 +3,18 @@
 <%!
 from urllib.parse import quote
 
+from django.conf import settings
 from django.utils.translation import gettext as _
 from openedx.core.djangolib.markup import HTML, Text
 %>
 
 <%
   course_key = str(course.id)
-  course_key_encoded = quote(course_key, safe='')
+  data_platform_certificate_base_url = getattr(settings, "DATAPLATFORM_CERTIFICATE_BASE_URL", "https://bi.ol.mit.edu/superset/dashboard/14/")
   data_platform_certificate_link = (
-    "https://bi.ol.mit.edu/superset/dashboard/14/?native_filters=(NATIVE_FILTER-Vz_eMSTIHKEPhUEzbKfeq:"
-    f"(extraFormData:(filters:!((col:'courserun_readable_id',op:IN,val:!('{course_key_encoded}')))),"
-    f"filterState:(value:!('{course_key_encoded}'))))"
+    f"{data_platform_certificate_base_url}?native_filters=(NATIVE_FILTER-Vz_eMSTIHKEPhUEzbKfeq:"
+    f"(extraFormData:(filters:!((col:'courserun_readable_id',op:IN,val:!('{course_key}')))),"
+    f"filterState:(value:!('{course_key}'))))"
   )
 %>
 <div class="data-download-container action-type-container">
