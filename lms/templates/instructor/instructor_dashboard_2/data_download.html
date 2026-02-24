@@ -9,12 +9,12 @@ from openedx.core.djangolib.markup import HTML, Text
 %>
 
 <%
-  course_key = str(course.id)
-  data_platform_certificate_base_url = getattr(settings, "DATAPLATFORM_CERTIFICATE_BASE_URL", "https://bi.ol.mit.edu/superset/dashboard/14/")
+  course_key_encoded = quote(str(course.id), safe='')
+  data_platform_certificate_base_url = getattr(settings, "DATAPLATFORM_CERTIFICATE_BASE_URL", "")
   data_platform_certificate_link = (
     f"{data_platform_certificate_base_url}?native_filters=(NATIVE_FILTER-Vz_eMSTIHKEPhUEzbKfeq:"
-    f"(extraFormData:(filters:!((col:'courserun_readable_id',op:IN,val:!('{course_key}')))),"
-    f"filterState:(value:!('{course_key}'))))"
+    f"(extraFormData:(filters:!((col:'courserun_readable_id',op:IN,val:!('{course_key_encoded}')))),"
+    f"filterState:(value:!('{course_key_encoded}'))))"
   )
 %>
 <div class="data-download-container action-type-container">
@@ -95,9 +95,18 @@ from openedx.core.djangolib.markup import HTML, Text
     <div class="issued_certificates">
       <p>${_("Click to list certificates that are issued for this course:")}</p>
       <p>
-        <a name="issued-certificates-list" class="light-button btn" href="${ data_platform_certificate_link }" target="_blank" rel="noopener noreferrer">
-          ${_("View Certificates Issued")}
-        </a>
+        % if data_platform_certificate_base_url:
+          <a name="issued-certificates-list" class="light-button btn" href="${ data_platform_certificate_link }" target="_blank" rel="noopener noreferrer">
+            ${_("View Certificates Issued")}
+          </a>
+        % else:
+          <span name="issued-certificates-list" class="light-button btn is-disabled" aria-disabled="true" style="opacity: 0.5; cursor: not-allowed;">
+            ${_("View Certificates Issued")}
+          </span>
+          <span class="copy-error" style="margin-left: 0.75em; color: #cb0712;">
+            ${_("No certificate data platform URL is configured. Please contact your administrator.")}
+          </span>
+        % endif
       </p>
       <div class="data-display-table certificate-data-display-table" id="data-issued-certificates-table"></div>
       <div class="issued-certificates-error request-response-error msg msg-error copy"></div>
