@@ -3,7 +3,8 @@
 <%namespace name='static' file='static_content.html'/>
 
 <%!
-from urllib.parse import urljoin
+import re
+from urllib.parse import unquote, urljoin
 
 from django.conf import settings
 from django.urls import reverse
@@ -20,11 +21,15 @@ full_name = UserProfile.objects.get(user=self.real_user).name
 profile_url = urljoin(getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu'), "profile")
 account_url = urljoin(getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu'), "account-settings")
 uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
-request_path = request.get_full_path().lower()
+request_path = unquote(request.get_full_path()).lower()
 is_uai_course = uai_course_key_formats and any(key in request_path for key in uai_course_key_formats)
-dashboard_url = urljoin(getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu'), "dashboard")
-if is_uai_course:
-    dashboard_url = urljoin(getattr(settings, 'MIT_LEARN_BASE_URL', 'https://learn.mit.edu'), "dashboard")
+is_course_key_in_path = bool(re.search(r"course-v1:[a-z0-9._-]+\+[a-z0-9._-]+\+[a-z0-9._-]+", request_path, flags=re.IGNORECASE))
+use_mitxonline_links = is_course_key_in_path and not is_uai_course
+
+if use_mitxonline_links:
+    dashboard_url = urljoin(getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu'), 'dashboard')
+else:
+    dashboard_url = urljoin(getattr(settings, 'MIT_LEARN_BASE_URL', 'https://learn.mit.edu'), 'dashboard')
 %>
 
 <div class="nav-item nav-item-dropdown" tabindex="-1">
@@ -39,13 +44,13 @@ if is_uai_course:
             </div>
         </div>
         <div class="dropdown-user-menu hidden" aria-label=${_("More Options")} role="menu" id="user-menu" tabindex="-1">
-            % if is_uai_course:
-                <div class="mobile-nav-item dropdown-item dropdown-nav-item show-in-mobile"><a href="${dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
-                <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>
-            % else:
+            % if use_mitxonline_links:
                 <div class="mobile-nav-item dropdown-item dropdown-nav-item show-in-mobile"><a href="${dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
                 <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${profile_url}" role="menuitem">${_("Profile")}</a></div>
                 <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${account_url}" role="menuitem">${_("Settings")}</a></div>
+                <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>
+            % else:
+                <div class="mobile-nav-item dropdown-item dropdown-nav-item show-in-mobile"><a href="${dashboard_url}" role="menuitem">${_("Dashboard")}</a></div>
                 <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>
             % endif
         </div>
