@@ -25,8 +25,9 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 
   doc_link = get_online_help_info(online_help_token)['doc_url']
   uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
+  course_key_regex = getattr(settings, "COURSE_KEY_REGEX", '(?:[^/+]+(/|\\+)[^/+]+(/|\\+)[^/?]+)')
   request_path = unquote(request.get_full_path()).lower()
-  is_course_key_in_path = bool(re.search(r"course-v1:[a-z0-9._-]+\+[a-z0-9._-]+\+[a-z0-9._-]+", request_path, flags=re.IGNORECASE))
+  is_course_key_in_path = bool(re.search(course_key_regex, request_path, flags=re.IGNORECASE))
   is_uai_course = uai_course_key_formats and any(key in request_path for key in uai_course_key_formats)
 
   mitxonline_base_url = getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu')

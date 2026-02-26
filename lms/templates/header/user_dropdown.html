@@ -23,7 +23,8 @@ account_url = urljoin(getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonli
 uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
 request_path = unquote(request.get_full_path()).lower()
 is_uai_course = uai_course_key_formats and any(key in request_path for key in uai_course_key_formats)
-is_course_key_in_path = bool(re.search(r"course-v1:[a-z0-9._-]+\+[a-z0-9._-]+\+[a-z0-9._-]+", request_path, flags=re.IGNORECASE))
+course_key_regex = getattr(settings, "COURSE_KEY_REGEX", '(?:[^/+]+(/|\\+)[^/+]+(/|\\+)[^/?]+)')
+is_course_key_in_path = bool(re.search(course_key_regex, request_path, flags=re.IGNORECASE))
 use_mitxonline_links = is_course_key_in_path and not is_uai_course
 
 if use_mitxonline_links:
