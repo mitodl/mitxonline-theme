@@ -25,9 +25,9 @@ from lms.djangoapps.branding import api as branding_api
 
   mitxonline_base_url = getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu')
   mitlearn_base_url = getattr(settings, 'MIT_LEARN_BASE_URL', 'https://learn.mit.edu')
-  use_mitxonline_links = is_course_key_in_path and not is_uai_course
+  is_mitxonline_course = is_course_key_in_path and not is_uai_course
 
-  if use_mitxonline_links:
+  if is_mitxonline_course:
     logo_destination_url = urljoin(f"{getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu')}", "dashboard")
   else:
     logo_destination_url = urljoin(f"{getattr(settings, 'MIT_LEARN_BASE_URL', 'https://learn.mit.edu')}", "dashboard")

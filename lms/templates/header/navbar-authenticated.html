@@ -32,8 +32,8 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 
   mitxonline_base_url = getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu')
   mitlearn_base_url = getattr(settings, 'MIT_LEARN_BASE_URL', 'https://learn.mit.edu')
-  use_mitxonline_links = is_course_key_in_path and not is_uai_course
-  if use_mitxonline_links:
+  is_mitxonline_course = is_course_key_in_path and not is_uai_course
+  if is_mitxonline_course:
     support_link = configuration_helpers.get_value('SUPPORT_SITE_LINK', settings.SUPPORT_SITE_LINK)
     catalog_link = mitxonline_base_url
     dashboard_url = urljoin(mitxonline_base_url, 'dashboard')

@@ -1,6 +1,7 @@
 <%page expression_filter="h"/>
 <%namespace name='static' file='../static_content.html'/>
 <%!
+import re
 from urllib.parse import urljoin
 from django.utils.translation import gettext as _
 from openedx.core.djangolib.markup import HTML, Text
@@ -24,10 +25,13 @@ from django.conf import settings
                     uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
                     request_path = request.get_full_path().lower()
                     is_uai_course = uai_course_key_formats and any(key in request_path for key in uai_course_key_formats)
-                    if is_uai_course:
-                        homepage_link = getattr(settings, 'MIT_LEARN_BASE_URL', 'https://learn.mit.edu')
-                    else:
+                    course_key_regex = getattr(settings, "COURSE_KEY_REGEX", '(?:[^/+]+(/|\\+)[^/+]+(/|\\+)[^/?]+)')
+                    is_course_key_in_path = bool(re.search(course_key_regex, request_path, flags=re.IGNORECASE))
+                    is_mitxonline_course = is_course_key_in_path and not is_uai_course
+                    if is_mitxonline_course:
                         homepage_link = getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu')
+                    else:
+                        homepage_link = getattr(settings, 'MIT_LEARN_BASE_URL', 'https://learn.mit.edu')
                 %>
                 ${_('The page that you were looking for was not found.')}
                 ${Text(_('Go back to the {homepage} or contact us about any pages that may have been moved at {email}.')).format(
