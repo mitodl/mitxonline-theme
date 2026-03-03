@@ -32,13 +32,12 @@ from django.conf import settings
                         homepage_link = getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu')
                     else:
                         homepage_link = getattr(settings, 'MIT_LEARN_BASE_URL', 'https://learn.mit.edu')
+                    support_link = getattr(settings, 'MIT_LEARN_SUPPORT_SITE_LINK', 'mailto:mitlearn-support@mit.edu')
                 %>
                 ${_('The page that you were looking for was not found.')}
                 ${Text(_('Go back to the {homepage} or contact us about any pages that may have been moved at {email}.')).format(
                   homepage=HTML(f'<a href="{homepage_link}">homepage</a>'),
-                  email=HTML('<a href="{address}">contact us</a>').format(
-                    address=Text(marketing_link('CONTACT'))
-                  )
+                  email=HTML(f'<a href="{support_link}">contact us</a>')
                 )}
                 % endif
             </%block>
