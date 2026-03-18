@@ -96,7 +96,7 @@ from openedx.core.djangolib.markup import HTML, Text
       <p>${_("Click to list certificates that are issued for this course:")}</p>
       <p>
         % if data_platform_certificate_base_url:
-          <a name="issued-certificates-list" class="light-button btn" href="${ data_platform_certificate_link }" target="_blank" rel="noopener noreferrer">
+          <a name="issued-certificates-list" class="light-button btn" href="${ data_platform_certificate_link | n }" target="_blank" rel="noopener">
             ${_("View Certificates Issued")}
           </a>
         % else:
