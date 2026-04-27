@@ -27,11 +27,9 @@
     "about": {"url": None, "title": _("About Us")},
     "terms_of_service": {"url": None, "title": _("Terms of Service")},
     "accessibility_policy": {"url": None, "title": _("Accessibility")},
-    "contact": {"url": None, "title": _("Contact Us")}
   }
 
-  if not is_uai_course:
-      footer_links["help"] = {"url": settings.SUPPORT_SITE_LINK, "title": _("Help")}
+  footer_links["help"] = {"url": settings.MIT_LEARN_SUPPORT_SITE_LINK, "title": _("Help")}
 
   for link in footer['navigation_links'] + footer['legal_links']:
       url = link.get('url')
