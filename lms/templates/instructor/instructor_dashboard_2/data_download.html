@@ -11,8 +11,9 @@ from openedx.core.djangolib.markup import HTML, Text
 <%
   course_key_encoded = quote(str(course.id), safe='')
   data_platform_certificate_base_url = getattr(settings, "DATAPLATFORM_CERTIFICATE_BASE_URL", "")
+  data_platform_certificate_native_filter_id = getattr(settings, "DATAPLATFORM_CERTIFICATE_NATIVE_FILTER_ID", "")
   data_platform_certificate_link = (
-    f"{data_platform_certificate_base_url}?native_filters=(NATIVE_FILTER-Vz_eMSTIHKEPhUEzbKfeq:"
+    f"{data_platform_certificate_base_url}?native_filters=(NATIVE_FILTER-{data_platform_certificate_native_filter_id}:"
     f"(extraFormData:(filters:!((col:'courserun_readable_id',op:IN,val:!('{course_key_encoded}')))),"
     f"filterState:(value:!('{course_key_encoded}'))))"
   )
