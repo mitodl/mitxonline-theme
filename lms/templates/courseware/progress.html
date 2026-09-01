@@ -1,39 +1,6 @@
-<%page expression_filter="h"/>
 <%inherit file="/courseware/progress.html"/>
-<%!
-from django.urls import reverse
-from django.utils.translation import gettext as _
 
-from lms.djangoapps.certificates.data import CertificateStatuses
-
-## Certificates for MITx Online courses are issued by MITx Online, not by edX, so the
-## progress page must never promise learners a certificate on the course end date.
-##
-## lms/djangoapps/certificates/api.py sets these two statuses when a course uses the
-## `end_with_date` certificates display behaviour and its certificate_available_date
-## has not passed yet. Both are hidden here, since the messaging is unwanted whether
-## or not the learner is passing:
-##   earned_but_not_available      -> "Your certificate will be available soon!"
-##   not_earned_but_available_date -> "Your certificate will be available after the indicated date"
-HIDDEN_CERT_STATUSES = ('earned_but_not_available', 'not_earned_but_available_date')
-%>
-<%block name="certificate_block">
-    %if certificate_data and certificate_data.cert_status not in HIDDEN_CERT_STATUSES:
-    <div class="auto-cert-message" id="course-success">
-        <div class="has-actions">
-            <% post_url = reverse('generate_user_cert', args=[str(course.id)]) %>
-            <div class="msg-content">
-                <h4 class="hd hd-4 title">${_(certificate_data.title)}</h4>
-                <p class="copy">${_(certificate_data.msg)}</p>
-            </div>
-            <div class="msg-actions">
-                %if certificate_data.cert_web_view_url:
-                <a class="btn" href="${certificate_data.cert_web_view_url}" rel="noopener" target="_blank">${_("View Certificate")} <span class="sr">${_("Opens in a new browser window")}</span></a>
-                %elif certificate_data.cert_status == CertificateStatuses.requesting:
-                <button class="btn generate_certs" data-endpoint="${post_url}" id="btn_generate_cert">${_('Request Certificate')}</button>
-                %endif
-            </div>
-        </div>
-    </div>
-    %endif
-</%block>
+## MITx Online issues its own certificates, so edX has none to deliver and must not
+## show any certificate messaging on the progress page. Emptying this block removes
+## the banner for every certificate status. See mitxonline-issues#1474.
+<%block name="certificate_block"></%block>
