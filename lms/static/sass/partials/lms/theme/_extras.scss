@@ -643,3 +643,15 @@ body.view-in-course {
 .wrap-instructor-info .instructor-info-action {
   margin-left: 0px !important;
 }
+
+// The ol_openedx_auto_select_language plugin pins video transcripts to the
+// course language, so the player's language picker is redundant. Chained
+// `.lang.menu-container` outranks the core rule in
+// VideoBlockDisplay.css that sets `.lang { display: inline-block; }`.
+// Transcript metadata is untouched, so the player still falls back to another
+// language if the course-language transcript fails to load.
+.xmodule_display.xmodule_VideoBlock .video .video-wrapper .video-controls {
+  .secondary-controls .lang.menu-container {
+    display: none;
+  }
+}
