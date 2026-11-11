@@ -5,12 +5,13 @@
   from django.urls import reverse
   from django.utils.translation import gettext as _
   from common.djangoapps.student.roles import GlobalStaff
-  from common.djangoapps.student.models import UserProfile
 
 %>
 
 <%
-full_name = UserProfile.objects.get(user=user).name
+## Show the learner's full name, falling back to the username for users without a profile.
+profile = getattr(user, 'profile', None)
+full_name = (profile.name if profile else '') or user.username
 %>
 
 % if uses_pattern_library:

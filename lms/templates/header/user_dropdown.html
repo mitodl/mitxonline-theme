@@ -11,13 +11,14 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from openedx.core.djangoapps.user_api.accounts.utils import retrieve_last_sitewide_block_completed
-from common.djangoapps.student.models import UserProfile
 %>
 
 <%
 ## This template should not use the target student's details when masquerading, see TNL-4895
 self.real_user = getattr(user, 'real_user', user)
-full_name = UserProfile.objects.get(user=self.real_user).name
+## Fall back to the username for users without a profile instead of raising a 500.
+profile = getattr(self.real_user, 'profile', None)
+full_name = (profile.name if profile else '') or self.real_user.username
 profile_url = urljoin(getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu'), "profile")
 account_url = urljoin(getattr(settings, 'MITXONLINE_BASE_URL', 'https://mitxonline.mit.edu'), "account-settings")
 uai_course_key_formats = getattr(settings, "UAI_COURSE_KEY_FORMATS", [])
